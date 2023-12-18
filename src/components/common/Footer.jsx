@@ -6,8 +6,10 @@ import { Link } from "react-router-dom";
 import Logo from "../../assets/Logo/Logo-Full-Light.png";
 
 // Icons
-import { FaFacebook, FaGoogle, FaTwitter, FaYoutube } from "react-icons/fa";
-
+import { FaSquareInstagram } from "react-icons/fa6";
+import { FaQuora } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 const BottomFooter = ["Privacy Policy", "Cookie Policy", "Terms"];
 const Resources = [
   "Articles",
@@ -47,10 +49,10 @@ const Footer = () => {
                 })}
               </div>
               <div className="flex gap-3 text-lg">
-                <FaFacebook />
-                <FaGoogle />
-                <FaTwitter />
-                <FaYoutube />
+                <Link to={"https://www.instagram.com/anshaneja5/"} target="_blank"><FaSquareInstagram className="hover:scale-105"></FaSquareInstagram></Link>
+                <Link to={"https://www.quora.com/profile/Ansh-Aneja-15"} target="_blank"><FaQuora className="hover:scale-105"></FaQuora></Link>
+                <Link to={"https://www.linkedin.com/in/anshaneja5/"} target="_blank"><FaLinkedin className="hover:scale-105"></FaLinkedin></Link>
+                <Link to={"https://github.com/anshaneja5"} target="_blank"><FaGithub className="hover:scale-105"></FaGithub></Link>
               </div>
               <div></div>
             </div>
