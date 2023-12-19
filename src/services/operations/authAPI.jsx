@@ -97,3 +97,26 @@ export function login(email, password, navigate) {
       dispatch(setLoading(false));
     }
   }
+
+  export function sendOtp(email,navigate){
+    return async(dispatch) => {
+        dispatch(setLoading(true));
+        try {
+            const response = await apiConnector("POST", SENDOTP_API, {
+                email,
+                checkUserPresent: true,
+              });
+            console.log("Send OTP RESPONSE ... ", response);
+            if(!response.data.success) {
+            throw new Error(response.data.message);
+            }
+            const navigate = useNavigate();
+            toast.success("OTP has been sent successfully");
+            navigate("/verify-email")
+        } catch (error) {
+            console.log("OTP cant be sent", error);
+            toast.error("Unable to send OTP");
+        }
+        dispatch(setLoading(false));
+    }
+  }

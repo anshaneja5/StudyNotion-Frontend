@@ -3,7 +3,7 @@ import "./App.css"
 import {Route,Routes} from "react-router-dom"
 import Home from "./pages/Home"
 import Navbar from "./components/common/Navbar"
-// import Signup from './pages/Signup'
+import Signup from './pages/Signup'
 import Login from './pages/Login'
 import ForgotPassword from './pages/ForgotPassword'
 import UpdatePassword from './pages/UpdatePassword'
@@ -17,6 +17,7 @@ function App() {
           path="/signup"
           element={<Signup/>}
         /> */}
+        <Route path="/signup" element={<Signup/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path='/forgot-password' element={<ForgotPassword/>}></Route>
         <Route path='/update-password/:id' element={<UpdatePassword/>}></Route>
