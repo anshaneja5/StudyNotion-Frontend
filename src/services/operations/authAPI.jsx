@@ -21,7 +21,7 @@ export function login(email, password, navigate) {
       //dispatch(action) => Dispatches an action. This is the only way to trigger a state change.
       dispatch(setLoading(true))
       try {
-        const response = await apiConnector("POST", "http://localhost:4000/api/v1/auth/login", {
+        const response = await apiConnector("POST", LOGIN_API , {
           email,
           password,
         })
@@ -98,24 +98,57 @@ export function login(email, password, navigate) {
     }
   }
 
-  export function sendOtp(email,navigate){
+  export function sendOtp(email, navigate) {
+    return async (dispatch) => {
+      const toastId = toast.loading("Loading...")
+      dispatch(setLoading(true))
+      try {
+        const response = await apiConnector("POST", SENDOTP_API, {
+          email,
+          checkUserPresent: true,
+        })
+        console.log("SENDOTP API RESPONSE............", response)
+  
+        console.log(response.data.success)
+  
+        if (!response.data.success) {
+          throw new Error(response.data.message)
+        }
+  
+        toast.success("OTP Sent Successfully")
+        navigate("/verify-email")
+      } catch (error) {
+        console.log("SENDOTP API ERROR............", error)
+        toast.error("Could Not Send OTP")
+      }
+      dispatch(setLoading(false))
+      toast.dismiss(toastId)
+    }
+  }
+  
+
+  export function signUp(firstName,lastName,email,password,confirmPassword,otp, accountType,navigate){
     return async(dispatch) => {
         dispatch(setLoading(true));
         try {
-            const response = await apiConnector("POST", SENDOTP_API, {
+            const response = await apiConnector("POST", SIGNUP_API, {
+                firstName,
+                lastName,
                 email,
-                checkUserPresent: true,
+                password,
+                confirmPassword,
+                otp,
+                accountType
               });
-            console.log("Send OTP RESPONSE ... ", response);
             if(!response.data.success) {
             throw new Error(response.data.message);
             }
-            const navigate = useNavigate();
-            toast.success("OTP has been sent successfully");
-            navigate("/verify-email")
+            toast.success("Sign Up successfully");
+            navigate("/login")
         } catch (error) {
-            console.log("OTP cant be sent", error);
-            toast.error("Unable to send OTP");
+            console.log("Could not sign in", error);
+            toast.error("Could not Sign In");
+            navigate("/signup")
         }
         dispatch(setLoading(false));
     }
