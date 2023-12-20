@@ -8,6 +8,8 @@ import Login from './pages/Login'
 import ForgotPassword from './pages/ForgotPassword'
 import UpdatePassword from './pages/UpdatePassword'
 import VerifyEmail from './pages/VerifyEmail'
+import About from './pages/About'
+import Contact from './pages/Contact'
 function App() {
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter relative">
@@ -19,6 +21,8 @@ function App() {
         <Route path='/forgot-password' element={<ForgotPassword/>}></Route>
         <Route path='/update-password/:id' element={<UpdatePassword/>}></Route>
         <Route path='/verify-email' element={<VerifyEmail/>}></Route>
+        <Route path='/about' element={<About/>}></Route>
+        <Route path='/contact' element={<Contact/>}></Route>
       </Routes>
     </div>
   )
