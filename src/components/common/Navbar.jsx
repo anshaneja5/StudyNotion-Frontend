@@ -9,7 +9,7 @@ import { matchPath } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import CTAButton from "../core/HomePage/Button"
 import { FaShoppingCart } from "react-icons/fa";
-import {ProfileDropDown} from '../core/HomePage/auth/ProfileDropDown'
+import ProfileDropDown from '../core/HomePage/auth/ProfileDropDown'
 import { apiConnector } from '../../services/apiconnector'
 import { categories } from '../../services/apis'
 import { useState } from 'react'

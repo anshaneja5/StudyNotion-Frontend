@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import React, { useEffect } from "react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import ScrollToTop from "react-scroll-to-top";
 import Banner from "../assets/Images/banner1.mp4"
 import Footer from "../components/common/Footer"
 // import ReviewSlider from "../components/common/ReviewSlider"
@@ -203,6 +204,10 @@ function Home() {
 
       {/* Footer */}
       <Footer />
+      <ScrollToTop 
+      viewBox="0 0 256 256"
+      style={{background:"yellow" , padding:"0 0 0 5px"}}
+      smooth/>
     </>
   )
 }
