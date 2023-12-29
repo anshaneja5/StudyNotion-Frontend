@@ -1,48 +1,57 @@
-import React, { useState } from 'react'
-import CTAButton from '../Button'
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import {logout} from "../../../../services/operations/authAPI"
-import { IoIosArrowDropdownCircle } from "react-icons/io";
-import { Link } from 'react-router-dom';
-const ProfileDropDown = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [click,setClick]=useState(false);
+import { useRef, useState } from "react"
+import { AiOutlineCaretDown } from "react-icons/ai"
+import { VscDashboard, VscSignOut } from "react-icons/vsc"
+import { useDispatch, useSelector } from "react-redux"
+import { Link, useNavigate } from "react-router-dom"
+
+import useOnClickOutside from "../../../../hooks/useOnClickOutside"
+import { logout } from "../../../../services/operations/authAPI"
+
+export default function ProfileDropdown() {
+  const { user } = useSelector((state) => state.profile)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [open, setOpen] = useState(false)
+  const ref = useRef(null)
+
+  useOnClickOutside(ref, () => setOpen(false))
+
+  if (!user) return null
+
   return (
-    <div className='relative transition-all duration-200'>
-      <div className='flex items-center transition-all duration-200' onClick={() => setClick(!click)}>
-        <img src={JSON.parse(localStorage.user).image} height={40} width={40} className='rounded-full'/>
-        <IoIosArrowDropdownCircle fill='white'/>
+    <button className="relative" onClick={() => setOpen(true)}>
+      <div className="flex items-center gap-x-1">
+        <img
+          src={user?.image}
+          alt={`profile-${user?.firstName}`}
+          className="aspect-square w-[30px] rounded-full object-cover"
+        />
+        <AiOutlineCaretDown className="text-sm text-richblack-100" />
       </div>
-      <div  className={`absolute bg-richblack-400 top-[120%] p-3 -left-[80%] rounded-lg  ${click ? 'block' : 'hidden'} `} >
-          <div className=" text-xl cursor-pointer hover:bg-richblack-50 transition-all duration-200 " onClick={()=>navigate("/dashboard/my-profile")}><h1>Dashboard</h1></div>
-          <div className=" text-xl cursor-pointer hover:bg-richblack-50 transition-all duration-200 "><Link to={"/"} onClick={()=>dispatch(logout(navigate))}><h1>Logout</h1></Link></div>
-      </div>
-    </div>
-  )
-}
-export default ProfileDropDown
-
-
-
-
-
-
-{/*  <div className='flex gap-5'>
-      <div onClick={()=>dispatch(logout(navigate))}>
-      <button className='yellowButton'>LogOut</button>
-      </div>
-      <div className='relative'>
-        <div className='flex items-center space-x-2 group'>
-          <img src={JSON.parse(localStorage.user).image} height={40} width={40} className='rounded-full'/>
-          <IoIosArrowDropdownCircle fill='white'/>
-        </div>
-        <div className='flex flex-col bg-richblack-500 absolute top-[120%] opacity-0 group-hover:opacity-100'>
-          <div className='hover:bg-richblack-200'>
-            <h1>Dashboard</h1>
-            <h1>Logout</h1>
+      {open && (
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="absolute top-[118%] right-0 z-[1000] divide-y-[1px] divide-richblack-700 overflow-hidden rounded-md border-[1px] border-richblack-700 bg-richblack-800"
+          ref={ref}
+        >
+          <Link to="/dashboard/my-profile" onClick={() => setOpen(false)}>
+            <div className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100 hover:bg-richblack-700 hover:text-richblack-25">
+              <VscDashboard className="text-lg" />
+              Dashboard
+            </div>
+          </Link>
+          <div
+            onClick={() => {
+              dispatch(logout(navigate))
+              setOpen(false)
+            }}
+            className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100 hover:bg-richblack-700 hover:text-richblack-25"
+          >
+            <VscSignOut className="text-lg" />
+            Logout
           </div>
         </div>
-      </div>
-</div>  */}
+      )}
+    </button>
+  )
+}
