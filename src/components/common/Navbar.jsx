@@ -14,25 +14,25 @@ import { apiConnector } from '../../services/apiconnector'
 import { categories } from '../../services/apis'
 import { useState } from 'react'
 import { FaArrowDown } from "react-icons/fa";
-const subLinks = [
-    {
-        title:"pyhton",
-        link:"/catalog/python"
-    },
-    {
-        title:"pyhton",
-        link:"/catalog/python"
-    },
-    {
-        title:"pyhton",
-        link:"/catalog/python"
-    },
-    {
-        title:"pyhton",
-        link:"/catalog/python"
-    },
+// const subLinks = [
+//     {
+//         title:"pyhton",
+//         link:"/catalog/python"
+//     },
+//     {
+//         title:"pyhton",
+//         link:"/catalog/python"
+//     },
+//     {
+//         title:"pyhton",
+//         link:"/catalog/python"
+//     },
+//     {
+//         title:"pyhton",
+//         link:"/catalog/python"
+//     },
     
-]
+// ]
 
 const Navbar = () => {
     useEffect(()=>{
@@ -44,20 +44,18 @@ const Navbar = () => {
     const {token} = useSelector((state)=>state.auth);
     const {user} = useSelector((state)=>state.profile);
     const {totalItems} = useSelector((state)=>state.cart);
-    // const [subLinks,setSubLinks]= useState([]);
-    // const fetchSublinks = async()=>{
-    //     try {
-    //         const result = await apiConnector("GET",categories.CATEGORIES_API)
-    //         console.log("printting sublinks me jo aya",result);
-    //         setSubLinks(result.data.data)
-    //     } catch (error) {
-    //         console.log("Could Not fetch the category list")
-    //         console.log(error.message)
-    //     }
-    // }
-    // useEffect( ()=>{
-    //     fetchSublinks();
-    // },[])
+    const [subLinks,setSubLinks]= useState([]);
+    const fetchSublinks = async()=>{
+        try {
+            const result = await apiConnector("GET",categories.CATEGORIES_API)
+            setSubLinks(result.data.data)
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+    useEffect( ()=>{
+        fetchSublinks();
+    },[])
     const location = useLocation(); 
     // function to match the route and current path used in navbar to make the list item yellow when you are on it
     const matchRoute = (route)=>{
@@ -88,8 +86,8 @@ const Navbar = () => {
                                                 subLinks.length ? (
                                                     subLinks.map((e,i)=>{
                                                         return (
-                                                            <Link to={`${e.link}`} key={i} className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50">
-                                                               <p> {e.title}</p>
+                                                            <Link to={`${e.name}`} key={i} className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50">
+                                                               <p> {e.name}</p>
                                                             </Link>
                                                         )
                                                 })) : (<div>Hello, nothing here</div>)

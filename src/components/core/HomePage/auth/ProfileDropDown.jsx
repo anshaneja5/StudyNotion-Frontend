@@ -16,7 +16,7 @@ const ProfileDropDown = () => {
         <IoIosArrowDropdownCircle fill='white'/>
       </div>
       <div  className={`absolute bg-richblack-400 top-[120%] p-3 -left-[80%] rounded-lg  ${click ? 'block' : 'hidden'} `} >
-          <div className=" text-xl cursor-pointer hover:bg-richblack-50 transition-all duration-200 "><h1>Dashboard</h1></div>
+          <div className=" text-xl cursor-pointer hover:bg-richblack-50 transition-all duration-200 " onClick={()=>navigate("/dashboard/my-profile")}><h1>Dashboard</h1></div>
           <div className=" text-xl cursor-pointer hover:bg-richblack-50 transition-all duration-200 "><Link to={"/"} onClick={()=>dispatch(logout(navigate))}><h1>Logout</h1></Link></div>
       </div>
     </div>
