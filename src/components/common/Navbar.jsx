@@ -26,6 +26,7 @@ const Navbar = () => {
     const {user} = useSelector((state)=>state.profile);
     const {totalItems} = useSelector((state)=>state.cart);
     const [subLinks,setSubLinks]= useState([]);
+    const [click,setClick]=useState(false)
     const fetchSublinks = async()=>{
         try {
             const result = await apiConnector("GET",categories.CATEGORIES_API)
@@ -78,9 +79,15 @@ const Navbar = () => {
                                         </div>
                                         
                                     </div>):(
-                                        <Link to={link?.path}>
+                                        <div>
+                                            <Link to={link?.path} className='hidden md:block'>
                                             <p className={`${matchRoute(link?.path) ? "text-yellow-25" : "text-ritchblack-25"}`}>{link?.title}</p>
-                                        </Link>
+                                            </Link>
+                                    
+                                            {/* {
+                                                click && <button className='text-black bg-yellow-50 md:hidden block'>Click Me</button>
+                                            } */}
+                                        </div>
                                     )
 
                                 }

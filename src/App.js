@@ -21,6 +21,8 @@ import { useSelector } from 'react-redux'
 import MyCourses from './components/core/Dashboard/MyCourses'
 import EditCourse from './components/core/Dashboard/EditCourse'
 import Catalog from './pages/Catalog'
+import CourseDetails from './pages/CourseDetails'
+import Cart from './components/core/Dashboard/Cart'
 function App() {
   const {user} = useSelector((state)=>state.profile)
   return (
@@ -30,6 +32,8 @@ function App() {
         <Route path='/' element={<Home/>}></Route>
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path='/catalog/:catalogName' element={<Catalog/>}></Route>
+        <Route path='/courses/:courseId' element={<CourseDetails/>}></Route>
         <Route path='/forgot-password' element={<ForgotPassword/>}></Route>
         <Route path='/update-password/:id' element={<UpdatePassword/>}></Route>
         <Route path='/verify-email' element={<VerifyEmail/>}></Route>
@@ -41,6 +45,7 @@ function App() {
             user?.accountType === ACCOUNT_TYPE.STUDENT && (
               <>
                <Route path='/dashboard/enrolled-courses' element={<EnrolledCourses/>}></Route>
+               <Route path='/dashboard/cart' element={<Cart/>}></Route>
               </>
             )
           }
@@ -54,7 +59,6 @@ function App() {
             )
           }
         </Route>
-        <Route path='/catalog/:catalogName' element={<Catalog/>}></Route>
         <Route path='*' element={<Error/>}/>
       </Routes>
     </div>
