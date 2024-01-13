@@ -14,25 +14,6 @@ import { apiConnector } from '../../services/apiconnector'
 import { categories } from '../../services/apis'
 import { useState } from 'react'
 import { FaArrowDown } from "react-icons/fa";
-// const subLinks = [
-//     {
-//         title:"pyhton",
-//         link:"/catalog/python"
-//     },
-//     {
-//         title:"pyhton",
-//         link:"/catalog/python"
-//     },
-//     {
-//         title:"pyhton",
-//         link:"/catalog/python"
-//     },
-//     {
-//         title:"pyhton",
-//         link:"/catalog/python"
-//     },
-    
-// ]
 
 const Navbar = () => {
     useEffect(()=>{
@@ -59,7 +40,8 @@ const Navbar = () => {
     const location = useLocation(); 
     // function to match the route and current path used in navbar to make the list item yellow when you are on it
     const matchRoute = (route)=>{
-        return matchPath({path:route},location.pathname);   {/*will return null if not match */}
+        {/*will return null if not match */}
+        return matchPath({path:route},location.pathname);   
     }
     
   return (
@@ -86,7 +68,7 @@ const Navbar = () => {
                                                 subLinks.length ? (
                                                     subLinks.map((e,i)=>{
                                                         return (
-                                                            <Link to={`${e.name}`} key={i} className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50">
+                                                            <Link to={`/catalog/${e.name.split(" ").join("-").toLowerCase()}`} key={i} className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50">
                                                                <p> {e.name}</p>
                                                             </Link>
                                                         )
