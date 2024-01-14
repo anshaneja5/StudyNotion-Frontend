@@ -85,6 +85,7 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
           <div>
             <p className="pb-3 pt-6 text-center text-sm text-richblack-25">
               30-Day Money-Back Guarantee
+              (to buy course, buy using success@razorpay in UPI)
             </p>
           </div>
 
