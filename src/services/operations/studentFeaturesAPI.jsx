@@ -29,7 +29,6 @@ export async function buyCourse(token, courses, userDetails, navigate, dispatch)
     try{
         //load the script
         const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
-
         if(!res) {
             toast.error("RazorPay SDK failed to load");
             return;
@@ -41,20 +40,19 @@ export async function buyCourse(token, courses, userDetails, navigate, dispatch)
                                 {
                                     Authorization: `Bearer ${token}`,
                                 })
-
         if(!orderResponse.data.success) {
             throw new Error(orderResponse.data.message);
         }
         console.log("PRINTING orderResponse", orderResponse);
         //options
         const options = {
-            key: process.env.RAZORPAY_KEY,
-            currency: orderResponse.data.message.currency,
+            key: process.env.REACT_APP_RAZORPAY_KEY,
             amount: `${orderResponse.data.message.amount}`,
-            order_id:orderResponse.data.message.id,
+            currency: orderResponse.data.message.currency,
             name:"StudyNotion",
             description: "Thank You for Purchasing the Course",
             image:rzpLogo,
+            order_id:orderResponse.data.message.id,
             prefill: {
                 name:`${userDetails.firstName}`,
                 email:userDetails.email
@@ -64,8 +62,10 @@ export async function buyCourse(token, courses, userDetails, navigate, dispatch)
                 sendPaymentSuccessEmail(response, orderResponse.data.message.amount,token );
                 //verifyPayment
                 verifyPayment({...response, courses}, token, navigate, dispatch);
+        
             }
         }
+        console.log("options iss===>>>", options)
         //Open razorpay modal
         const paymentObject = new window.Razorpay(options);
         paymentObject.open();
@@ -73,7 +73,6 @@ export async function buyCourse(token, courses, userDetails, navigate, dispatch)
             toast.error("oops, payment failed");
             console.log(response.error);
         })
-
     }
     catch(error) {
         console.log("PAYMENT API ERROR.....", error);
