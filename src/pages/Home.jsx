@@ -15,6 +15,7 @@ import InstructorSection from "../components/core/HomePage/InstructorSection"
 import LearningLanguageSection from "../components/core/HomePage/LearningLanguageSection"
 import TimelineSection from "../components/core/HomePage/TimelineSection"
 import ExploreMore from "../components/core/HomePage/ExploreMore";
+import ReviewSlider from "../components/common/ReviewSlider";
 
 function Home() {
   useEffect(() => {
@@ -199,9 +200,9 @@ function Home() {
         <h1 className="text-center text-4xl font-semibold mt-8">
           Reviews from other learners
         </h1>
-        {/* <ReviewSlider /> */}
+        
       </div>
-
+      <ReviewSlider />
       {/* Footer */}
       <Footer />
       <ScrollToTop 

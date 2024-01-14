@@ -14,7 +14,7 @@ const VideoDetails = () => {
   const { courseId, sectionId, subSectionId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const playerRef = useRef(null);
+  const playerRef = useRef(null);  //ref to change the dom
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
   const { courseSectionData, courseEntireData, completedLectures } =
@@ -32,14 +32,14 @@ const VideoDetails = () => {
         navigate(`/dashboard/enrolled-courses`);
       } else {
         // console.log("courseSectionData", courseSectionData)
-        const filteredData = courseSectionData.filter(
+        // from courseSectionData find your section and from that section find the subsection, means your particular video
+        const filteredData = await courseSectionData.filter(
           (course) => course._id === sectionId
-        );
-        // console.log("filteredData", filteredData)
-        const filteredVideoData = filteredData?.[0]?.subSection.filter(
-          (data) => data._id === subSectionId
-        );
-        // console.log("filteredVideoData", filteredVideoData)
+        ); //got the section of sectionId
+        const filteredVideoData = await filteredData?.[0]?.subSection.filter(
+          (data) => data?._id === subSectionId
+        ); //got the subsetion/video
+        console.log("filtered video data",filteredVideoData)
         setVideoData(filteredVideoData[0]);
         setPreviewSource(courseEntireData.thumbnail);
         setVideoEnded(false);
@@ -51,11 +51,11 @@ const VideoDetails = () => {
   const isFirstVideo = () => {
     const currentSectionIndx = courseSectionData.findIndex(
       (data) => data._id === sectionId
-    );
+    ); //find current section index
 
     const currentSubSectionIndx = courseSectionData[
       currentSectionIndx
-    ].subSection.findIndex((data) => data._id === subSectionId);
+    ].subSection.findIndex((data) => data._id === subSectionId); //find current subsection index
 
     if (currentSectionIndx === 0 && currentSubSectionIndx === 0) {
       return true;
@@ -81,7 +81,7 @@ const VideoDetails = () => {
 
     // console.log("no of subsections", noOfSubsections)
 
-    if (currentSubSectionIndx !== noOfSubsections - 1) {
+    if (currentSubSectionIndx !== noOfSubsections - 1) {   //means other lectures are there too inside the current section, so just have to goto next lecture
       const nextSubSectionId =
         courseSectionData[currentSectionIndx].subSection[
           currentSubSectionIndx + 1
@@ -89,7 +89,7 @@ const VideoDetails = () => {
       navigate(
         `/view-course/${courseId}/section/${sectionId}/sub-section/${nextSubSectionId}`
       );
-    } else {
+    } else { //here goto next sections first lecture
       const nextSectionId = courseSectionData[currentSectionIndx + 1]._id;
       const nextSubSectionId =
         courseSectionData[currentSectionIndx + 1].subSection[0]._id;
@@ -113,7 +113,7 @@ const VideoDetails = () => {
     ].subSection.findIndex((data) => data._id === subSectionId);
 
     if (
-      currentSectionIndx === courseSectionData.length - 1 &&
+      currentSectionIndx === courseSectionData.length - 1 && //n-1 means it is last video
       currentSubSectionIndx === noOfSubsections - 1
     ) {
       return true;
@@ -121,7 +121,7 @@ const VideoDetails = () => {
       return false;
     }
   };
-
+ 
   // go to the previous video
   const goToPrevVideo = () => {
     // console.log(courseSectionData)
@@ -134,7 +134,7 @@ const VideoDetails = () => {
       currentSectionIndx
     ].subSection.findIndex((data) => data._id === subSectionId);
 
-    if (currentSubSectionIndx !== 0) {
+    if (currentSubSectionIndx !== 0) {  //means there are lecture before the current lecture
       const prevSubSectionId =
         courseSectionData[currentSectionIndx].subSection[
           currentSubSectionIndx - 1
@@ -142,7 +142,7 @@ const VideoDetails = () => {
       navigate(
         `/view-course/${courseId}/section/${sectionId}/sub-section/${prevSubSectionId}`
       );
-    } else {
+    } else {  //means goto last video of before section
       const prevSectionId = courseSectionData[currentSectionIndx - 1]._id;
       const prevSubSectionLength =
         courseSectionData[currentSectionIndx - 1].subSection.length;
