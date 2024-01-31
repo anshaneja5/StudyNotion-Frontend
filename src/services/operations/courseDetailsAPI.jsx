@@ -5,6 +5,7 @@ import { updateCompletedLectures } from "../../slices/viewCourseSlice"
 import { apiConnector } from "../apiconnector"
 import { courseEndpoints } from "../apis"
 const {
+  CREATE_CATEGORY_API,
   COURSE_DETAILS_API,
   COURSE_CATEGORIES_API,
   GET_ALL_COURSE_API,
@@ -62,6 +63,25 @@ export const fetchCourseDetails = async (courseId) => {
   toast.dismiss(toastId)
   //   dispatch(setLoading(false));
   return result
+}
+
+//creating category
+export const createCategory = async (data,token) => {
+  const toastId = toast.loading("Loading...")
+  try {
+    const response = await apiConnector("POST", CREATE_CATEGORY_API, data , {
+      Authorization: `Bearer ${token}`,
+    })
+    console.log("Create Category resposnse is=>", response)
+    if (!response?.data?.success) {
+      throw new Error("Could Not Create Category")
+    }
+    toast.success("Category Added Sucessfully")
+  } catch (error) {
+    console.log("CREATE_CATEGORY_API API ERROR............", error)
+    toast.error(error.message)
+  }
+  toast.dismiss(toastId)
 }
 
 // fetching the available course categories

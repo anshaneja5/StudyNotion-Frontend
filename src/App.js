@@ -27,6 +27,7 @@ import ViewCourse from './pages/ViewCourse'
 import VideoDetails from './components/core/ViewCourse/VideoDetails'
 import Instructor from './components/core/Dashboard/InstructorDashboard/Instructor'
 import Settings from './components/core/Dashboard/Settings'
+import AddCategory from './components/core/Dashboard/AddCategory'
 function App() {
   const {user} = useSelector((state)=>state.profile)
   return (
@@ -61,6 +62,13 @@ function App() {
                <Route path='/dashboard/my-courses' element={<MyCourses/>}></Route>
                <Route path='/dashboard/instructor' element={<Instructor/>}></Route>
                <Route path='/dashboard/edit-course/:courseId' element={<EditCourse/>}></Route>
+              </>
+            )
+          }
+          {
+            user?.accountType === ACCOUNT_TYPE.ADMIN && (
+              <>
+              <Route path='/dashboard/add-category' element={<AddCategory/>}></Route>
               </>
             )
           }
